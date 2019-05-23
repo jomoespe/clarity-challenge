@@ -6,16 +6,20 @@ import (
 	"github.com/jomoespe/clarity-challenge/pkg/set"
 )
 
-func TestSomething(t *testing.T) {
-	if testing.Short() {
-		t.Skip("skipping test in short mode.")
+func TestAdd(t *testing.T) {
+	tests := []struct {
+		values   []string
+		expected int
+	}{
+		{values: []string{"one", "two", "three"}, expected: 3},
+		{values: []string{"one", "two", "two", "three", "two", "three"}, expected: 3},
 	}
-	set := set.Set{}
-	set.Add("one")
-	set.Add("two")
-	set.Add("three")
-	set.Add("three")
-	if len(set) != 3 {
-		t.Errorf("wrong set size. Expected: %d, Got: %d", 3, len(set))
+
+	for _, test := range tests {
+		set := set.Set{}
+		set.Add(test.values...)
+		if len(set) != test.expected {
+			t.Errorf("wrong set size. Expected: %d, Got: %d", test.expected, len(set))
+		}
 	}
 }
