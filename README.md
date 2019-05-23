@@ -13,7 +13,7 @@ This project is a Go implementation of Clarity blackend code challlenge. [The do
 make
 ```
 
-this will generate the binaries `parselog` and `parselogd` in the project root directory.
+This build the binaries `parselog` and `parselogd` in the project root directory.
 
 ## Parse the data with time_init and time_end (`parselog`)
 
