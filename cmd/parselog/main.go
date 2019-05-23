@@ -89,7 +89,7 @@ func processLoglines(loglines chan *logparser.Logline) <-chan struct{} {
 					receivers.Add(line.Target)
 				}
 				if line.Target == conf.host {
-					receivers.Add(line.Source)
+					senders.Add(line.Source)
 				}
 			case <-ticker.C:
 				printReport(senders, receivers)
@@ -103,7 +103,7 @@ func processLoglines(loglines chan *logparser.Logline) <-chan struct{} {
 }
 
 func printReport(senders, receivers set.Set) {
-	fmt.Println("\n == Report =====================")
+	fmt.Println("\n== Report =====================")
 	fmt.Printf("__ Connected to %s ________\n", conf.host)
 	for host := range senders {
 		fmt.Printf("\t%s\n", host)
