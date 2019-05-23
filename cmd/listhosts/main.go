@@ -2,32 +2,12 @@ package main
 
 import (
 	"bufio"
-	"errors"
 	"fmt"
 	"os"
-	"strconv"
-	"strings"
 
 	"github.com/jomoespe/clarity-challenge/pkg/set"
+	"github.com/jomoespe/clarity-challenge/pkg/logparser"
 )
-
-type logline struct {
-	date   int64
-	source string
-	target string
-}
-
-func parse(line string) (*logline, error) {
-	s := strings.Split(line, " ")
-	if len(s) < 3 {
-		return &logline{}, errors.New("log line does not have at least three fields")
-	}
-	d, err := strconv.ParseInt(s[0], 10, 64)
-	if err != nil {
-		return &logline{}, fmt.Errorf("error parsing date. line: %v", line)
-	}
-	return &logline{date: d, source: s[1], target: s[2]}, nil
-}
 
 type config struct {
 	filename           string
@@ -60,17 +40,17 @@ func processLog(config *config) *set.Set {
 	found := &set.Set{}
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
-		if line, err := parse(scanner.Text()); err != nil {
+		if line, err := logparser.ParseLogLine(scanner.Text()); err != nil {
 			if config.verbose {
 				fmt.Fprintf(os.Stderr, "%v\n", err)
 			}
 		} else {
-			if line.date >= config.startDate && line.date <= config.endDate {
+			if line.Date >= config.startDate && line.Date <= config.endDate {
 				switch {
-				case line.source == config.hostname:
-					found.Add(line.target)
-				case line.target == config.hostname:
-					found.Add(line.source)
+				case line.Source == config.hostname:
+					found.Add(line.Target)
+				case line.Target == config.hostname:
+					found.Add(line.Source)
 				}
 			}
 		}
