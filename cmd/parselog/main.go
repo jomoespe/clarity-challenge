@@ -7,20 +7,14 @@ import (
 	"os"
 	"strconv"
 	"strings"
+
+	"github.com/jomoespe/clarity-challenge/pkg/set"
 )
 
 type logline struct {
 	date   int64
 	source string
 	target string
-}
-
-type set map[string]struct{}
-
-func (set set) add(host string) {
-	if _, ok := set[host]; !ok {
-		set[host] = struct{}{}
-	}
 }
 
 func parse(line string) (*logline, error) {
@@ -35,34 +29,46 @@ func parse(line string) (*logline, error) {
 	return &logline{date: d, source: s[1], target: s[2]}, nil
 }
 
+type config struct {
+	filename           string
+	startDate, endDate int64
+	hostname           string
+	verbose            bool
+}
+
 func main() {
 	// parse cmd line
-	filename := "test/input-file-10000.txt"
-	startDate := int64(1565647204351)
-	endDate := int64(1565687511867)
-	hostname := "Aadvik"
-	verbose := false
+	config := &config{
+		"test/input-file-10000.txt",
+		int64(1565647204351),
+		int64(1565687511867),
+		"Aadvik",
+		false,
+	}
+	processLog(config)
+}
 
-	found := set{}
+func processLog(config *config) {
+	found := set.Set{}
 
-	file, err := os.Open(filename)
+	file, err := os.Open(config.filename)
 	if err != nil {
-		panic(fmt.Sprintf("error opening %s: %v", filename, err))
+		panic(fmt.Sprintf("error opening %s: %v", config.filename, err))
 	}
 
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
 		if line, err := parse(scanner.Text()); err != nil {
-			if verbose {
+			if config.verbose {
 				fmt.Fprintf(os.Stderr, "%v\n", err)
 			}
 		} else {
-			if line.date >= startDate && line.date <= endDate {
+			if line.date >= config.startDate && line.date <= config.endDate {
 				switch {
-				case line.source == hostname:
-					found.add(line.target)
-				case line.target == hostname:
-					found.add(line.source)
+				case line.source == config.hostname:
+					found.Add(line.target)
+				case line.target == config.hostname:
+					found.Add(line.source)
 				}
 			}
 		}

@@ -1,6 +1,6 @@
 # Clarity backend code challenge
 
-This project is a Go implementation of Clarity blackend code challlenge. [The document](./docs/clarity_code_challenge.pdf) in the doc/ directory.
+This project is a Go implementation of [Clarity](https://clarity.ai/) blackend code challlenge. [The document](./docs/clarity_code_challenge.pdf) in the doc/ directory.
 
 ## Requirements
 
