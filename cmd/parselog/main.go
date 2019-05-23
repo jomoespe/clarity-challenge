@@ -23,9 +23,10 @@ type config struct {
 }
 
 var conf = createConfig()
+var senders = set.Set{}
+var receivers = set.Set{}
 
 func main() {
-	//config := createConfig()
 	reader, err := logparser.CreateReader(conf.filenames...)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, "File not found")
@@ -35,6 +36,7 @@ func main() {
 	loglines := readLog(reader)
 	quit := processLoglines(loglines)
 	<-quit
+	printReport(senders, receivers)
 }
 
 func createConfig() *config {
@@ -73,8 +75,6 @@ func readLog(reader *bufio.Reader) chan *logparser.Logline {
 func processLoglines(loglines chan *logparser.Logline) <-chan struct{} {
 	quit := make(chan struct{})
 	ticker := time.NewTicker(conf.lapse)
-	senders := set.Set{}
-	receivers := set.Set{}
 
 	go func() {
 		for {
