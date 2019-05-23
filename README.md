@@ -2,7 +2,10 @@
 
 The project uses [GNU Make](https://www.gnu.org/software/make/) as build automation tool.
 
-## Parse the data with time_init and time_end
+## Requirements
+
+- [Go SDK](https://golang.org/), as programming language.
+- [GNU Make](https://www.gnu.org/software/make/) as build automation tool.
 
 ### How to build
 
@@ -10,11 +13,20 @@ The project uses [GNU Make](https://www.gnu.org/software/make/) as build automat
 make
 ```
 
+this will generate the binaries `parselog` and `parselogd` in the project root directory.
+
+## Parse the data with time_init and time_end
 
 ### How to run
 
 ```terminal
-./parselogs <time_init> <time_end> <hostname> [--verbose]
+./parselog <time_init> <time_end> <hostname> [-file=<log_filename>] [--verbose]
 ```
 
 ## Unlimited input parser
+
+> TBD
+
+```terminal
+./parselogd
+```

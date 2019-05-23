@@ -1,7 +1,8 @@
-target = parselogs
+parselog-target = parselog
+parselogd-target = parselogd
 
 build: clean
-	@go build -o $(target) cmd/parselogs/main.go
+	@go build -o $(parselog-target) cmd/parselog/main.go
 
 clean: 
-	@rm -f main $(target) 
+	@rm -f main $(parselog-target) 
