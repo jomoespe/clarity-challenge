@@ -85,19 +85,14 @@ func processLoglines(loglines chan *logparser.Logline) <-chan struct{} {
 					quit <- struct{}{}
 					break
 				}
-				senders.Add(line.Source)
-				receivers.Add(line.Target)
-				//				fmt.Printf("timestamp: %d source: %s target: %s", line.Timestamp, line.Source, line.Target)
+				if line.Source == conf.host {
+					receivers.Add(line.Target)
+				}
+				if line.Target == conf.host {
+					receivers.Add(line.Source)
+				}
 			case <-ticker.C:
-				// print report
-				fmt.Println("__ Senders _____________________")
-				for host := range senders {
-					fmt.Println(host)
-				}
-				fmt.Println("__ Receivers __________________")
-				for host := range receivers {
-					fmt.Println(host)
-				}
+				printReport(senders, receivers)
 				// clean data
 				senders.Clean()
 				receivers.Clean()
@@ -107,28 +102,15 @@ func processLoglines(loglines chan *logparser.Logline) <-chan struct{} {
 	return quit
 }
 
-/*
-func y(lines chan logparser.Logline) {
-	ticker := time.NewTicker(OutputTriggerDuration)
-	quit := make(chan struct{})
-	senders := set.Set{}
-	receivers := set.Set{}
-	go func() {
-		for {
-		   select {
-		   case line, more := <- lines:
-			if !more {
-				break
-			}
-
-			case <- ticker.C:
-				// do stuff
-				fmt.Println("Tick!")
-			case <- quit:
-				ticker.Stop()
-				return
-			}
-		}
-	 }()
+func printReport(senders, receivers set.Set) {
+	fmt.Println("\n == Report =====================")
+	fmt.Printf("__ Connected to %s ________\n", conf.host)
+	for host := range senders {
+		fmt.Printf("\t%s\n", host)
+	}
+	fmt.Printf("__ Receive connections from %s _______\n", conf.host)
+	for host := range receivers {
+		fmt.Printf("\t%s\n", host)
+	}
+	fmt.Println("================================")
 }
-*/
