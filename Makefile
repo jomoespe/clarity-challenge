@@ -9,9 +9,6 @@ clean:
 	@ go clean ./...
 	@ rm -f main $(hostnames-target) $(parselog-target) 
 
-dependencies:
-	@ go mod tidy
-
 test:
 	@ go vet ./...
 	@ go test -cover ./...
