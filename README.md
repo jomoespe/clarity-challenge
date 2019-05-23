@@ -1,6 +1,6 @@
 # Clarity backend code challenge
 
-The project uses [GNU Make](https://www.gnu.org/software/make/) as build automation tool.
+This project is a Go implementation of Clarity blackend code challlenge. [The document](./docs/clarity_code_challenge.pdf) in the doc/ directory.
 
 ## Requirements
 
