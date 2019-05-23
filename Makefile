@@ -1,13 +1,14 @@
-.PHONY: test listhosts parselog
+.PHONY: test listhosts parselog logsupplier
 
-hostnames-target = listhosts
-parselog-target  = parselog
+hostnames-target   = listhosts
+parselog-target    = parselog
+logsupplier-target = logsupplier
 
-all: clean test listhosts parselog
+all: clean test listhosts parselog logsupplier
 
 clean: 
 	@ go clean ./...
-	@ rm -f main $(hostnames-target) $(parselog-target) 
+	@ rm -f main $(hostnames-target) $(parselog-target) $(logsupplier-target) 
 
 test:
 	@ go vet ./...
@@ -18,3 +19,6 @@ listhosts:
 
 parselog:
 	@ go build -o $(parselog-target) cmd/parselog/main.go
+
+logsupplier:
+	@ go build -o $(logsupplier-target) cmd/logsupplier/main.go

@@ -3,6 +3,8 @@ parselog
 !cmd/parselog
 listhosts
 !cmd/listhosts
+logsupplier
+!cmd/logsupplier
 
 # MacOSX files
 .DS_Store
