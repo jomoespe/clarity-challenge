@@ -37,7 +37,7 @@ type config struct {
 }
 
 func main() {
-	// parse cmd line
+	// TODO parse cmd line
 	config := &config{
 		"test/input-file-10000.txt",
 		int64(1565647204351),
@@ -45,17 +45,19 @@ func main() {
 		"Aadvik",
 		false,
 	}
-	processLog(config)
+	found := processLog(config)
+	for host := range *found {
+		fmt.Println(host)
+	}
 }
 
-func processLog(config *config) {
-	found := set.Set{}
-
+func processLog(config *config) *set.Set {
 	file, err := os.Open(config.filename)
 	if err != nil {
 		panic(fmt.Sprintf("error opening %s: %v", config.filename, err))
 	}
 
+	found := &set.Set{}
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
 		if line, err := parse(scanner.Text()); err != nil {
@@ -73,7 +75,5 @@ func processLog(config *config) {
 			}
 		}
 	}
-	for host := range found {
-		fmt.Println(host)
-	}
+	return found
 }
