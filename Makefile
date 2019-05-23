@@ -1,13 +1,13 @@
-.PHONY: test parselog parselogd
+.PHONY: test listhosts parselog
 
-parselog-target = parselog
-parselogd-target = parselogd
+hostnames-target = listhosts
+parselog-target  = parselog
 
-all: clean test parselog parselogd
+all: clean test listhosts parselog
 
 clean: 
 	@ go clean ./...
-	@ rm -f main $(parselog-target) $(parselogd-target) 
+	@ rm -f main $(hostnames-target) $(parselog-target) 
 
 dependencies:
 	@ go mod tidy
@@ -16,8 +16,8 @@ test:
 	@ go vet ./...
 	@ go test -cover ./...
 
+listhosts:
+	@ go build -o $(hostnames-target) cmd/listhosts/main.go
+
 parselog:
 	@ go build -o $(parselog-target) cmd/parselog/main.go
-
-parselogd:
-	@ go build -o $(parselogd-target) cmd/parselogd/main.go

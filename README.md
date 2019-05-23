@@ -2,9 +2,18 @@
 
 This project is a Go implementation of [Clarity](https://clarity.ai/) blackend code challlenge. [The document](./docs/clarity_code_challenge.pdf) in the doc/ directory.
 
+The project structure is based on [Standard Go Project Layout](https://github.com/golang-standards/project-layout).
+
+## Solution description
+
+Based on requirements I've created two binaries:
+
+- `listhosts`, which reads a log file and list of hostnames connected to the given host during the given period.
+- `parselog`, 
+
 ## Requirements
 
-- [Go SDK](https://golang.org/), as programming language.
+- [Go 1.11+](https://golang.org/), as programming language.
 - [GNU Make](https://www.gnu.org/software/make/) as build automation tool.
 
 ### How to build
@@ -13,24 +22,24 @@ This project is a Go implementation of [Clarity](https://clarity.ai/) blackend c
 make
 ```
 
-This build the binaries `parselog` and `parselogd` in the project root directory.
+This build the binaries `listhosts` and `parselog` in the project root directory.
 
-To check/verify dependencies:
+To check/verify project dependencies dependencies:
 
 ```terminal
 make dependencies
 ```
 
-## Parse the data with time_init and time_end (`parselog`)
+## Parse the data with time_init and time_end (`listhosts`)
 
 ```terminal
-./parselog <time_init> <time_end> <hostname> [-file=<log_filename>] [--verbose]
+./listhosts --start=<time_init> --end=<time_end> --host=<hostname> [-file=<log_filename>] [--verbose]
 ```
 
-## Unlimited input parser (`parselogd`)
+## Unlimited input parser (`parselog`)
 
 > TBD
 
 ```terminal
-./parselogd
+./parselog [--host=<hostname>] [FILE]
 ```

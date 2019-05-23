@@ -1,7 +1,8 @@
+# Project files
 parselog
 !cmd/parselog
-parselogd
-!cmd/parselogd
+listhosts
+!cmd/listhosts
 
 # MacOSX files
 .DS_Store
