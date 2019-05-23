@@ -34,47 +34,18 @@ func main() {
 // integer between 0 and 10 will be added to the end of the name, e.g `focused_turing3`
 func getRandomNames() (string, string) {
 begin:
-	left := left[rand.Intn(len(left))]
-	right := right[rand.Intn(len(right))]
-	if left == "boring" && right == "wozniak" /* Steve Wozniak is not boring */ {
+	left := people[rand.Intn(len(people))]
+	right := people[rand.Intn(len(people))]
+	if left == right {
 		goto begin
 	}
 	return left, right
 }
 
 var (
-	left = [...]string{
-		"awesome",
-		"beautiful",
-		"cool",
-		"distracted",
-		"elegant",
-		"funny",
-		"great",
-		"happy",
-		"intelligent",
-		"jolly",
-		"keen",
-		"kind",
-		"laughing",
-		"magical",
-		"naughty",
-		"optimistic",
-		"quirky",
-		"relaxed",
-		"sad",
-		"thirsty",
-		"unruffled",
-		"vibrant",
-		"wizardly",
-		"xenodochial",
-		"youthful",
-		"zen",
-	}
-
 	// Docker, starting from 0.7.x, generates names from notable scientists and hackers.
 	// Please, for any amazing man that you add to the list, consider adding an equally amazing woman to it, and vice versa.
-	right = [...]string{
+	people = [...]string{
 		// Kathleen Antonelli, American computer programmer and one of the six original programmers of the ENIAC - https://en.wikipedia.org/wiki/Kathleen_Antonelli
 		"antonelli",
 
