@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 	"os"
-	"io"
 	"time"
+	"bufio"
 
 	"github.com/jomoespe/clarity-challenge/pkg/logparser"
 )
@@ -36,17 +36,28 @@ func main() {
 		}
 	 }()
 	
-	for {
-		line, err := reader.ReadString('\n')
-		if err != nil{
-		    if err == io.EOF {
-				break
-		    }
-		    fmt.Fprintln(os.Stderr, err)
-		    os.Exit(logparser.IOErrorExitCode)
+	processing := x(reader)
+	for  {
+		line, more := <- processing
+		if !more {
+			break
 		}
-		fmt.Print("=> " + line)
+		fmt.Printf("date: %d source: %s target: %s", line.Date, line.Source, line.Target)
 	}
-	quit<- struct{}{}
-	fmt.Println("Sacabó!")
+}
+
+func x(reader *bufio.Reader) <-chan *logparser.Logline {
+	out := make(chan *logparser.Logline)
+	go func() {
+		for {
+			line, err := reader.ReadString('\n')
+			if err != nil{
+				close(out)
+				break
+			}
+			Logline, _ := logparser.ParseLogLine(line)
+			out <- Logline
+		}
+	}()
+	return out
 }
