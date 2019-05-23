@@ -2,7 +2,7 @@
 
 hostnames-target   = listhosts
 parselog-target    = parselog
-logsupplier-target = logsupplier
+logsupplier-target = log-generator
 
 all: clean test listhosts parselog logsupplier
 

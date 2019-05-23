@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"math/rand"
 	"time"
+	"os"
 )
 
 const (
@@ -19,7 +20,7 @@ func main() {
 			case <-ticker.C:
 				now := time.Now().UnixNano() / 1000000
 				source, target := getRandomNames()
-				fmt.Printf("%d %s %s\n", now, source, target)
+				fmt.Fprintf(os.Stdout, "%d %s %s\n", now, source, target)
 			}
 		}
 	}()

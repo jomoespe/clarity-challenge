@@ -3,7 +3,7 @@ parselog
 !cmd/parselog
 listhosts
 !cmd/listhosts
-logsupplier
+log-generator
 !cmd/logsupplier
 
 # MacOSX files
