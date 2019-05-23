@@ -15,6 +15,12 @@ make
 
 This build the binaries `parselog` and `parselogd` in the project root directory.
 
+To check/verify dependencies:
+
+```terminal
+make dependencies
+```
+
 ## Parse the data with time_init and time_end (`parselog`)
 
 ```terminal

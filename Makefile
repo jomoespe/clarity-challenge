@@ -9,8 +9,8 @@ clean:
 	@ go clean ./...
 	@ rm -f main $(parselog-target) $(parselogd-target) 
 
-init:
-	@ go mod init
+dependencies:
+	@ go mod tidy
 
 test:
 	@ go vet ./...
