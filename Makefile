@@ -13,7 +13,8 @@ init:
 	@ go mod init
 
 test:
-	@ go test ./...
+	@ go vet ./...
+	@ go test -cover ./...
 
 parselog:
 	@ go build -o $(parselog-target) cmd/parselog/main.go
