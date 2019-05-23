@@ -4,26 +4,22 @@ import (
 	"fmt"
 	"os"
 	"io"
-	"bufio"
 	"time"
+
+	"github.com/jomoespe/clarity-challenge/pkg/logparser"
 )
 
 const (
-	// FileNotFoundExitCode is the exit code when file is not found
-	FileNotFoundExitCode  = 1
-	
-	// IOErrorExitCode is the exit when an I/O error is triggered procesing input file
-	IOErrorExitCode       = 2
-	
 	// OutputTriggerDuration is the duration the script will output
 	OutputTriggerDuration = 1 * time.Second
 )
 
 func main() {
-	reader, err := reader(os.Args)
+	filenames := os.Args[1:]
+	reader, err := logparser.CreateReader(filenames...)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, "File not found")
-		os.Exit(FileNotFoundExitCode)
+		os.Exit(logparser.FileNotFoundExitCode)
 	}
 	ticker := time.NewTicker(OutputTriggerDuration)
 	quit := make(chan struct{})
@@ -47,24 +43,10 @@ func main() {
 				break
 		    }
 		    fmt.Fprintln(os.Stderr, err)
-		    os.Exit(IOErrorExitCode)
+		    os.Exit(logparser.IOErrorExitCode)
 		}
 		fmt.Print("=> " + line)
 	}
 	quit<- struct{}{}
 	fmt.Println("Sacabó!")
-}
-
-// Creates a new reader for first filename array element, or from stdout
-// if array is empty.
-func reader(filenames []string) (reader *bufio.Reader, err error) {
-	if len(filenames) <= 1 {
-		reader = bufio.NewReader(os.Stdin)
-	} else {
-		var file *os.File
-		if file, err = os.Open(filenames[1]); err == nil {
-			reader = bufio.NewReader(file)
-		}
-	}
-	return 
 }
