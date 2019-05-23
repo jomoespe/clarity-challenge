@@ -1,1 +1,4 @@
 parselogs
+
+#MacOSX files
+.DS_Store
