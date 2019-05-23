@@ -6,13 +6,17 @@ parselogd-target = parselogd
 all: clean test parselog parselogd
 
 clean: 
-	@rm -f main $(parselog-target) $(parselogd-target) 
+	@ go clean ./...
+	@ rm -f main $(parselog-target) $(parselogd-target) 
+
+init:
+	@ go mod init
 
 test:
-	@go test ./...
+	@ go test ./...
 
 parselog:
-	@go build -o $(parselog-target) cmd/parselog/main.go
+	@ go build -o $(parselog-target) cmd/parselog/main.go
 
 parselogd:
-	@go build -o $(parselogd-target) cmd/parselogd/main.go
+	@ go build -o $(parselogd-target) cmd/parselogd/main.go
