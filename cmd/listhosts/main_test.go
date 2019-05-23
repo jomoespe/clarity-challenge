@@ -1,6 +1,10 @@
 package main
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/jomoespe/clarity-challenge/pkg/logparser"
+)
 
 var ProcessLog = processLog
 
@@ -10,7 +14,7 @@ func TestProcessLog(t *testing.T) {
 		expected int
 	}{
 		{config: &config{
-			"../../test/input-file-10000.txt",
+			[]string{"../../test/input-file-10000.txt"},
 			int64(1565647204351),
 			int64(1565687511867),
 			"Aadvik",
@@ -19,7 +23,8 @@ func TestProcessLog(t *testing.T) {
 			expected: 3},
 	}
 	for _, test := range tests {
-		found := *processLog(test.config)
+		reader, _ := logparser.CreateReader(test.config.filenames...)
+		found := *processLog(test.config, reader)
 		if len(found) != test.expected {
 			t.Errorf("wrong number of elements processed size. Expected: %d, Got: %d", test.expected, len(found))
 		}
