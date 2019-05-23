@@ -15,15 +15,13 @@ make
 
 this will generate the binaries `parselog` and `parselogd` in the project root directory.
 
-## Parse the data with time_init and time_end
-
-### How to run
+## Parse the data with time_init and time_end (`parselog`)
 
 ```terminal
 ./parselog <time_init> <time_end> <hostname> [-file=<log_filename>] [--verbose]
 ```
 
-## Unlimited input parser
+## Unlimited input parser (`parselogd`)
 
 > TBD
 
