@@ -1,6 +1,6 @@
 # Clarity backend code challenge
 
-This project is a Go implementation of [Clarity](https://clarity.ai/) blackend code challlenge. [The document](./docs/clarity_code_challenge.pdf) in the doc/ directory.
+This project is a Go implementation of [Clarity](https://clarity.ai/) blackend code challlenge. [The document](./docs/clarity_code_challenge.pdf) in the `doc/` directory.
 
 The project structure is based on [Standard Go Project Layout](https://github.com/golang-standards/project-layout).
 
@@ -8,8 +8,14 @@ The project structure is based on [Standard Go Project Layout](https://github.co
 
 Based on requirements I've created two programs:
 
-- `listhosts`, to implement first requirement: *Parse the data with time_init and time_end*.
-- `parselog`, to implement second requirement: *Unlimited input parser*.
+- `listhosts` to implement first requirement: *Parse the data with time_init and time_end*.
+- `parselog` to implement second requirement: *Unlimited input parser*.
+
+### Why Go languaje?
+
+The requirements are about processing files, so, generating a native application looks like the more natural way to implement the solution. This way also ease the integration with other tools, allowing orchestration; let's say *as much POSIX as possible*.
+
+Also, taking into account that is more like a *system application*, using a language optimized for this kind of things will help to implement the performance and resource consumption.
 
 ## Build the project
 
