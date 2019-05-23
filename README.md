@@ -36,10 +36,12 @@ This build the binaries `listhosts` and `parselog` in the project root directory
 
 All parameters are optional.
 
+| Parameter            | Description                                               |
+|----------------------|-----------------------------------------------------------|
 | `-start=<time_init>` | The start date. Defaul is from begining                   |
 | `-end=<time_end>]`   | The end date. Default is to the end                       |
 | `-host=<hostname>`   | The host to find. Default is all host                     |
-| `-v`           | Print errors and warnings in stardard error               |
+| `-v`                 | Print errors and warnings in stardard error               |
 | `-h`                 | Show command line arguments and exit                      |
 | `FILE`               | The file to process. If no file it process standard input |
 
