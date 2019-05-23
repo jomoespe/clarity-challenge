@@ -3,5 +3,8 @@ parselog
 parselogd
 !cmd/parselogd
 
-#MacOSX files
+# MacOSX files
 .DS_Store
+
+# VSCode files
+.vscode/
