@@ -63,7 +63,7 @@ func processLog(config *config, reader io.Reader) *set.Set {
 				fmt.Fprintf(os.Stderr, "%v\n", err)
 			}
 		} else {
-			if line.Date >= config.startDate && line.Date <= config.endDate {
+			if line.Timestamp >= config.startDate && line.Timestamp <= config.endDate {
 				switch {
 				case config.hostname == "*":
 					found.Add(line.Target)

@@ -8,7 +8,7 @@ import (
 )
 
 type Logline struct {
-	Date   int64
+	Timestamp   int64
 	Source string
 	Target string
 }
@@ -22,5 +22,5 @@ func ParseLogLine(line string) (*Logline, error) {
 	if err != nil {
 		return &Logline{}, fmt.Errorf("error parsing date. line: %v", line)
 	}
-	return &Logline{Date: d, Source: s[1], Target: s[2]}, nil
+	return &Logline{Timestamp: d, Source: s[1], Target: s[2]}, nil
 }

@@ -42,7 +42,7 @@ func main() {
 		if !more {
 			break
 		}
-		fmt.Printf("date: %d source: %s target: %s", line.Date, line.Source, line.Target)
+		fmt.Printf("timestamp: %d source: %s target: %s", line.Timestamp, line.Source, line.Target)
 	}
 }
 
