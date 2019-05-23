@@ -2,18 +2,18 @@ package main
 
 import (
 	"bufio"
-	"fmt"
 	"flag"
-	"os"
-	"math"
+	"fmt"
 	"io"
+	"math"
+	"os"
 
-	"github.com/jomoespe/clarity-challenge/pkg/set"
 	"github.com/jomoespe/clarity-challenge/pkg/logparser"
+	"github.com/jomoespe/clarity-challenge/pkg/set"
 )
 
 type config struct {
-	filenames           []string
+	filenames          []string
 	startDate, endDate int64
 	hostname           string
 	verbose            bool
@@ -48,9 +48,9 @@ func createConfig() *config {
 	return &config{
 		filenames: files,
 		startDate: *start,
-		endDate: *end,
-		hostname: *hostname,
-		verbose: *verbose,
+		endDate:   *end,
+		hostname:  *hostname,
+		verbose:   *verbose,
 	}
 }
 

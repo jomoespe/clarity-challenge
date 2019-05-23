@@ -7,7 +7,7 @@ import (
 
 // CreateReader for first filename array element, or from standard input
 // if array is empty.
-func CreateReader(filenames...string) (reader *bufio.Reader, err error) {
+func CreateReader(filenames ...string) (reader *bufio.Reader, err error) {
 	if len(filenames) < 1 {
 		reader = bufio.NewReader(os.Stdin)
 	} else {
@@ -16,5 +16,5 @@ func CreateReader(filenames...string) (reader *bufio.Reader, err error) {
 			reader = bufio.NewReader(file)
 		}
 	}
-	return 
+	return
 }

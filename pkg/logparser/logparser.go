@@ -8,9 +8,9 @@ import (
 )
 
 type Logline struct {
-	Timestamp   int64
-	Source string
-	Target string
+	Timestamp int64
+	Source    string
+	Target    string
 }
 
 func ParseLogLine(line string) (*Logline, error) {
@@ -18,9 +18,11 @@ func ParseLogLine(line string) (*Logline, error) {
 	if len(s) < 3 {
 		return &Logline{}, errors.New("log line does not have at least three fields")
 	}
-	d, err := strconv.ParseInt(s[0], 10, 64)
+	timestamp, err := strconv.ParseInt(s[0], 10, 64)
 	if err != nil {
 		return &Logline{}, fmt.Errorf("error parsing date. line: %v", line)
 	}
-	return &Logline{Timestamp: d, Source: s[1], Target: s[2]}, nil
+	source := s[1]
+	target := s[2][:len(s[2])-1]
+	return &Logline{timestamp, source, target}, nil
 }

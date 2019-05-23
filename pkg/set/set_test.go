@@ -23,3 +23,23 @@ func TestAdd(t *testing.T) {
 		}
 	}
 }
+
+func TestClean(t *testing.T) {
+	tests := []struct {
+		values   []string
+		expected int
+	}{
+		{values: []string{}, expected: 0},
+		{values: []string{"one", "two", "three"}, expected: 0},
+		{values: []string{"one", "two", "two", "three", "two", "three"}, expected: 0},
+	}
+
+	for _, test := range tests {
+		set := set.Set{}
+		set.Add(test.values...)
+		set.Clean()
+		if len(set) != test.expected {
+			t.Errorf("set not empty after Clean(). Expected: %d, Got: %d", test.expected, len(set))
+		}
+	}
+}

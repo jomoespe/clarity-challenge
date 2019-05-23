@@ -37,19 +37,19 @@ This build the binaries `listhosts` and `parselog` in the project root directory
 ### Parse the data with time_init and time_end (`listhosts`)
 
 ```terminal
-./listhosts [-start=<time_init>] [-end=<time_end>] [-host=<hostname>] [-v] [-h] [FILE]
+./listhosts [-start=time_init] [-end=time_end] [-host=hostname] [-v] [-h] [FILE]
 ```
 
 All parameters are optional.
 
-| Parameter            | Description                                               |
-|----------------------|-----------------------------------------------------------|
-| `-start=<time_init>` | The start date. Defaul is from begining                   |
-| `-end=<time_end>]`   | The end date. Default is to the end                       |
-| `-host=<hostname>`   | The host to find. Default is all host                     |
-| `-v`                 | Print errors and warnings in stardard error               |
-| `-h`                 | Show command line arguments and exit                      |
-| `FILE`               | The file to process. If no file it process standard input |
+| Parameter          | Description                                               |
+|--------------------|-----------------------------------------------------------|
+| `-start=time_init` | The start date. Defaul is from begining                   |
+| `-end=time_end`    | The end date. Default is to the end                       |
+| `-host=hostname`   | The host to find. Default is all host                     |
+| `-v`               | Print errors and warnings in stardard error               |
+| `-h`               | Show command line arguments and exit                      |
+| `FILE`             | The file to process. If no file it process standard input |
 
 Examples:
 
@@ -69,5 +69,11 @@ cat test/input-file-10000.txt | ./listhosts -host=Aadvik | wc -l
 > TBD
 
 ```terminal
-./parselog [--host=<hostname>] [FILE]
+./parselog -host=hostname [-lapse=seconds] [FILE]
 ```
+
+| Parameter        | Optional | Description                                                 |
+|------------------|:--------:|-------------------------------------------------------------|
+| `-host=hostname` | No       | The host to find. Default is all host                       |
+| `-lapse=seconds` | Yes      | Number of seconds to gererate report. Default 3600 (1 hour) |
+| `FILE`           | Yes      | The file to process. If no file it process standard input   |
