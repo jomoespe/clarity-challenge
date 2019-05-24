@@ -15,10 +15,10 @@ test:
 	@ go test -cover ./...
 
 listhosts:
-	@ go build -o $(hostnames-target) cmd/listhosts/main.go
+	@ go build -o $(hostnames-target) -ldflags "-s -w" cmd/listhosts/main.go
 
 parselog:
-	@ go build -o $(parselog-target) cmd/parselog/main.go
+	@ go build -o $(parselog-target) -ldflags "-s -w" cmd/parselog/main.go
 
 logsupplier:
-	@ go build -o $(logsupplier-target) cmd/logsupplier/main.go
+	@ go build -o $(logsupplier-target) -ldflags "-s -w" cmd/logsupplier/main.go
