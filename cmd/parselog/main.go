@@ -25,6 +25,7 @@ type config struct {
 var conf = createConfig()
 var senders = set.Set{}
 var receivers = set.Set{}
+var conns = set.HostConnections{}
 
 func main() {
 	reader, err := logparser.CreateReader(conf.filenames...)
@@ -85,6 +86,8 @@ func processLoglines(loglines chan *logparser.Logline) <-chan struct{} {
 					quit <- struct{}{}
 					break
 				}
+				
+				conns.Add(line.Source)
 				if line.Source == conf.host {
 					receivers.Add(line.Target)
 				}
@@ -103,14 +106,16 @@ func processLoglines(loglines chan *logparser.Logline) <-chan struct{} {
 }
 
 func printReport(senders, receivers set.Set) {
-	fmt.Println("\n== Report =====================")
-	fmt.Printf("__ Connected to %s ________\n", conf.host)
+	fmt.Println("\n== Report =========================================================================")
+	fmt.Printf(" > Connected to %s ________\n", conf.host)
 	for host := range senders {
 		fmt.Printf("\t%s\n", host)
 	}
-	fmt.Printf("__ Receive connections from %s _______\n", conf.host)
+	fmt.Printf(" > Receive connections from %s _______\n", conf.host)
 	for host := range receivers {
 		fmt.Printf("\t%s\n", host)
 	}
-	fmt.Println("================================")
+	host, max := conns.Max()
+	fmt.Printf("\n > Host that generate max connections connections is %s (%d connectios)\n", host, max)
+	fmt.Println("=====================================================================================")
 }
