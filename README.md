@@ -28,8 +28,12 @@ Also, taking into account that are like a *system applications*, using a languag
 
 ### Project struxcrture
 
-The source file for three programs are located in [cmd/](cmd/) folder.
+The source file for three programs are located in [cmd/](cmd/) folder. There are an main package for each program: `listhost`, `parselog`and `logsupplier`.
 
+There are two code packages:
+
+- `logparser` with common behaviour, line *opening the file reader* or *parsing a log line*.
+- `types` with the data types used by program (`set` and `hostconnections`)
 
 ### How to build
 
@@ -42,6 +46,8 @@ This build the binaries `listhosts`, `parselog` and `log-generator` in the proje
 ## Running the programs
 
 ### Parse the data with time_init and time_end (`listhosts`)
+
+Print a list of hostnames connected to the given host during the given period
 
 ```terminal
 ./listhosts [-start=time_init] [-end=time_end] [-host=hostname] [-v] [-h] [FILE]
@@ -71,6 +77,12 @@ cat test/input-file-10000.txt | ./listhosts -host=Aadvik | wc -l
 
 ### Unlimited input parser (`parselog`)
 
+Process a log file and, for a period of time, reports:
+
+- a list of hostnames connected to the given host.
+- a list of hostnames received connections from given host.
+- the hostname that generated most connections.
+
 ```terminal
 ./parselog [-host=hostname] [-lapse=seconds] [FILE]
 ```
@@ -87,10 +99,14 @@ Examples:
 # Parse a file looking for connections with 'Aadvik' host
 ./parselog -host=Aadvik test/input-file-10000.txt
 
-# 
-./log-generator | ./parselog -lapse=5 -host=dijkstra
+# Parse logs from input stream, generating report each 10 seconds for host dijkstra
+./log-generator | ./parselog -lapse=10 -host=dijkstra
 ```
 
 ### Ramdom log lines provider (`log-generator`)
 
-To help running the samples, I've created an small tool
+To help running the samples, I've created an small tool that generates log lines in the stardanr output each 100 Milliseconds.
+
+```terminal
+./log-generator
+```
