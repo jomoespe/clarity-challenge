@@ -19,6 +19,8 @@ func TestCreateReader(t *testing.T) {
 		{[]string{"../../test/input-file-10000.txt"}, false},
 		{[]string{"../../test/input-file-10000.txt", "file-does-not-exist"}, false},
 		{[]string{"file-does-not-exist"}, true},
+		{[]string{""}, true},
+		{[]string{}, false},
 	}
 	for _, test := range tests {
 		_, err := logparser.CreateReader(test.filenames...)
