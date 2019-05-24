@@ -1,4 +1,5 @@
 # Clarity backend code challenge
+[![Build Status](https://travis-ci.com/jomoespe/clarity-challenge.svg?token=pvtAthG3oqWcKLGsBRBA&branch=master)](https://travis-ci.com/jomoespe/clarity-challenge)
 
 This project is my implementation of [Clarity](https://clarity.ai/) [blackend code challlenge](./docs/clarity_code_challenge.pdf).
 
