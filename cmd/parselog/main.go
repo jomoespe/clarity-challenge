@@ -23,12 +23,12 @@ type config struct {
 }
 
 var (
-	conf = createConfig()
-	senders = types.Set{}
+	conf      = createConfig()
+	senders   = types.Set{}
 	receivers = types.Set{}
-	conns = types.HostConnections{}
+	conns     = types.HostConnections{}
 )
- 
+
 func main() {
 	reader, err := logparser.CreateReader(conf.filenames...)
 	if err != nil {
@@ -44,7 +44,7 @@ func main() {
 
 func createConfig() *config {
 	host := flag.String("host", "", "the host to find")
-	lapse := flag.Int("lapse", 3600, "Number of seconds to gererate report")
+	lapse := flag.Int("lapse", 3600, "Number of seconds to generate report")
 	flag.Parse()
 
 	files := flag.Args()
@@ -88,7 +88,7 @@ func processLoglines(loglines chan *logparser.Logline) <-chan struct{} {
 					quit <- struct{}{}
 					break
 				}
-				
+
 				conns.Add(line.Source)
 				if line.Source == conf.host {
 					receivers.Add(line.Target)
@@ -110,7 +110,7 @@ func processLoglines(loglines chan *logparser.Logline) <-chan struct{} {
 
 func printReport(senders, receivers types.Set) {
 	now := time.Now().Unix()
-	
+
 	fmt.Printf("\n== Report (%v) ==================================================================\n", time.Unix(now, 0))
 	fmt.Printf(" > Connected to %s ________\n", conf.host)
 	for host := range senders {
