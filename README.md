@@ -11,6 +11,8 @@ Based on requirements I've created two programs:
 - `listhosts` to implement first requirement: *Parse the data with time_init and time_end*.
 - `parselog` to implement second requirement: *Unlimited input parser*.
 
+Also, I've creatd an utility, `log-generator` for testing purposes. It generates a log line (`timestamp source-source target-host`) every 100 milliseconds in standard output.
+
 ### Why Go languaje?
 
 The requirements are about processing files, so, generating a native application looks like the more natural way to implement the solution. This way also ease the integration with other tools, allowing orchestration; let's say *as much POSIX as possible*.
@@ -69,11 +71,21 @@ cat test/input-file-10000.txt | ./listhosts -host=Aadvik | wc -l
 > TBD
 
 ```terminal
-./parselog -host=hostname [-lapse=seconds] [FILE]
+./parselog [-host=hostname] [-lapse=seconds] [FILE]
 ```
 
-| Parameter        | Optional | Description                                                 |
-|------------------|:--------:|-------------------------------------------------------------|
-| `-host=hostname` | No       | The host to find. Default is all host                       |
-| `-lapse=seconds` | Yes      | Number of seconds to gererate report. Default 3600 (1 hour) |
-| `FILE`           | Yes      | The file to process. If no file it process standard input   |
+| Parameter        | Description                                                 |
+|------------------|-------------------------------------------------------------|
+| `-host=hostname` | The host to find. Default is no host                        |
+| `-lapse=seconds` | Number of seconds to gererate report. Default 3600 (1 hour) |
+| `FILE`           | The file to process. If no file it process standard input   |
+
+Examples:
+
+```terminal
+# Parse a file looking for connections with 'Aadvik' host
+./parselog -host=Aadvik test/input-file-10000.txt
+
+# 
+./log-generator | ./parselog -lapse=5 -host=dijkstra
+```
