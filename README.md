@@ -1,8 +1,6 @@
 # Clarity backend code challenge
 
-This project is a Go implementation of [Clarity](https://clarity.ai/) blackend code challlenge. [The document](./docs/clarity_code_challenge.pdf) in the `doc/` directory.
-
-The project structure is based on [Standard Go Project Layout](https://github.com/golang-standards/project-layout).
+This project is my implementation of [Clarity](https://clarity.ai/) [blackend code challlenge](./docs/clarity_code_challenge.pdf).
 
 ## Solution description
 
@@ -13,11 +11,13 @@ Based on requirements I've created two programs:
 
 Also, I've creatd an utility, `log-generator` for testing purposes. It generates a log line (`timestamp source-source target-host`) every 100 milliseconds in standard output.
 
+The project structure is based on [Standard Go Project Layout](https://github.com/golang-standards/project-layout).
+
 ### Why Go languaje?
 
-The requirements are about processing files, so, generating a native application looks like the more natural way to implement the solution. This way also ease the integration with other tools, allowing orchestration; let's say *as much POSIX as possible*.
+The requirements are about processing files, so, generating a native application looks like the more natural way to implement it. This ease the integration with other tools, allowing orchestration, piping with other utilities, etc; let's say *as much POSIX as possible*.
 
-Also, taking into account that is more like a *system application*, using a language optimized for this kind of things will help to implement the performance and resource consumption.
+Also, taking into account that are like a *system applications*, using a language optimized for this things will help to improve performance and resource consumption.
 
 ## Build the project
 
@@ -26,13 +26,18 @@ Also, taking into account that is more like a *system application*, using a lang
 - [Go 1.11+](https://golang.org/), as programming language.
 - [GNU Make](https://www.gnu.org/software/make/) as build automation tool.
 
+### Project struxcrture
+
+The source file for three programs are located in [cmd/](cmd/) folder.
+
+
 ### How to build
 
 ```terminal
 make
 ```
 
-This build the binaries `listhosts` and `parselog` in the project root directory.
+This build the binaries `listhosts`, `parselog` and `log-generator` in the project root directory.
 
 ## Running the programs
 
@@ -41,8 +46,6 @@ This build the binaries `listhosts` and `parselog` in the project root directory
 ```terminal
 ./listhosts [-start=time_init] [-end=time_end] [-host=hostname] [-v] [-h] [FILE]
 ```
-
-All parameters are optional.
 
 | Parameter          | Description                                               |
 |--------------------|-----------------------------------------------------------|
@@ -62,13 +65,11 @@ Examples:
 # all host related to *Aadvik* from standard input (piped)
 cat test/input-file-10000.txt | ./listhosts -host=Aadvik
 
-# count all host related to *Aadvik* from standard input (piped)
+# count all host related to *Aadvik* from standard input (piping stdin and stdout)
 cat test/input-file-10000.txt | ./listhosts -host=Aadvik | wc -l
 ```
 
 ### Unlimited input parser (`parselog`)
-
-> TBD
 
 ```terminal
 ./parselog [-host=hostname] [-lapse=seconds] [FILE]
@@ -89,3 +90,7 @@ Examples:
 # 
 ./log-generator | ./parselog -lapse=5 -host=dijkstra
 ```
+
+### Ramdom log lines provider (`log-generator`)
+
+To help running the samples, I've created an small tool
