@@ -1,3 +1,7 @@
+// Copyright 2018 Jomoespe. All rights reserved.
+// Use of this source code is governed by a WTFPL-style
+// license that can be found in the LICENSE file.package logparser_test
+
 package types
 
 import (
@@ -11,7 +15,7 @@ func (c HostConnections) Add(host string) {
 	if _, ok := c[host]; ok {
 		i = c[host] + 1
 	}
-	c[host] = i;
+	c[host] = i
 }
 
 func (c HostConnections) Count(host string) int {
@@ -27,7 +31,7 @@ func (c HostConnections) Max() (string, int) {
 	s := Sort(c)
 	maxHost := ""
 	maxConns := 0
-	for k,v := range s {
+	for k, v := range s {
 		if v > maxConns {
 			maxHost = k
 			maxConns = v
@@ -36,17 +40,16 @@ func (c HostConnections) Max() (string, int) {
 	return maxHost, maxConns
 }
 
-
 // Sort returns a sorted copy of the map
 func Sort(m HostConnections) HostConnections {
 	n := map[int][]string{}
 	var a []int
 
 	for k, v := range m {
-			n[v] = append(n[v], k)
+		n[v] = append(n[v], k)
 	}
 	for k := range n {
-			a = append(a, k)
+		a = append(a, k)
 	}
 	//	sort.Sort(sort.Reverse(sort.IntSlice(a)))
 	sort.Sort(sort.Reverse(sort.IntSlice(a)))
