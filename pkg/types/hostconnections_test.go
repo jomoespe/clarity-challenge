@@ -1,8 +1,8 @@
 package types_test
 
 import (
-	"testing"
 	"fmt"
+	"testing"
 
 	"github.com/jomoespe/clarity-challenge/pkg/types"
 )
@@ -18,7 +18,7 @@ func TestAddHostConnection(t *testing.T) {
 	conns.Add("host-1")
 
 	if len(conns) != 2 {
-		t.Errorf("Unexècted host connections size. Expected: 2, Got: %d", len(conns))
+		t.Errorf("Unexpected host connections size. Expected: 2, Got: %d", len(conns))
 	}
 }
 
@@ -37,13 +37,13 @@ func TestCountHostConnections(t *testing.T) {
 	host3Conns := connections.Count("host-3")
 
 	if host1Conns != 5 {
-		t.Errorf("Unexècted host connections for host1. Expected: 5, Got: %d", host1Conns)
+		t.Errorf("Unexpected host connections for host1. Expected: 5, Got: %d", host1Conns)
 	}
 	if host2Conns != 2 {
-		t.Errorf("Unexècted host connections for host2. Expected: 2, Got: %d", host2Conns)
+		t.Errorf("Unexpected host connections for host2. Expected: 2, Got: %d", host2Conns)
 	}
 	if host3Conns != 0 {
-		t.Errorf("Unexècted host connections for host3. Expected: 0, Got: %d", host3Conns)
+		t.Errorf("Unexpected host connections for host3. Expected: 0, Got: %d", host3Conns)
 	}
 }
 
