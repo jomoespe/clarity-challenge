@@ -38,7 +38,7 @@ There are two code packages:
 
 ### How to build
 
-```terminal
+```bash
 make
 ```
 
@@ -50,7 +50,7 @@ This build the binaries `listhosts`, `parselog` and `log-generator` in the proje
 
 Print a list of hostnames connected to the given host during the given period
 
-```terminal
+```bash
 ./listhosts [-start=time_init] [-end=time_end] [-host=hostname] [-v] [-h] [FILE]
 ```
 
@@ -65,7 +65,7 @@ Print a list of hostnames connected to the given host during the given period
 
 Examples:
 
-```terminal
+```bash
 # all host related to *Aadvik* between two dates from a file.
 ./listhosts -start=1565647205599 -end=1565687511867 -host=Aadvik -v test/input-file-10000.txt
 
@@ -84,7 +84,7 @@ Process a log file and, for a period of time, reports:
 - a list of hostnames received connections from given host.
 - the hostname that generated most connections.
 
-```terminal
+```bash
 ./parselog [-host=hostname] [-lapse=seconds] [FILE]
 ```
 
@@ -96,7 +96,7 @@ Process a log file and, for a period of time, reports:
 
 Examples:
 
-```terminal
+```bash
 # Parse a file looking for connections with 'Aadvik' host
 ./parselog -host=Aadvik test/input-file-10000.txt
 
@@ -112,6 +112,6 @@ To help running the samples, I've created an small tool that generates log lines
 |-----------------------|-------------------------------------------------------------|
 | `-delay=milliseconds` | Number of milliseconds to wait between log line generation  |
 
-```terminal
+```bash
 ./log-generator [-delay=milliseconds]
 ```
