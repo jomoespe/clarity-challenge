@@ -1,4 +1,4 @@
-package set
+package types
 
 type Set map[string]struct{}
 

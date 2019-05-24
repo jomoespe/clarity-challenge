@@ -9,7 +9,7 @@ import (
 	"os"
 
 	"github.com/jomoespe/clarity-challenge/pkg/logparser"
-	"github.com/jomoespe/clarity-challenge/pkg/set"
+	"github.com/jomoespe/clarity-challenge/pkg/types"
 )
 
 type config struct {
@@ -54,8 +54,8 @@ func createConfig() *config {
 	}
 }
 
-func processLog(config *config, reader io.Reader) *set.Set {
-	found := &set.Set{}
+func processLog(config *config, reader io.Reader) *types.Set {
+	found := &types.Set{}
 	scanner := bufio.NewScanner(reader)
 	for scanner.Scan() {
 		if line, err := logparser.ParseLogLine(scanner.Text()); err != nil {

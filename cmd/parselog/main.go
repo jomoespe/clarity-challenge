@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/jomoespe/clarity-challenge/pkg/logparser"
-	"github.com/jomoespe/clarity-challenge/pkg/set"
+	"github.com/jomoespe/clarity-challenge/pkg/types"
 )
 
 const (
@@ -23,9 +23,9 @@ type config struct {
 }
 
 var conf = createConfig()
-var senders = set.Set{}
-var receivers = set.Set{}
-var conns = set.HostConnections{}
+var senders = types.Set{}
+var receivers = types.Set{}
+var conns = types.HostConnections{}
 
 func main() {
 	reader, err := logparser.CreateReader(conf.filenames...)
@@ -105,7 +105,7 @@ func processLoglines(loglines chan *logparser.Logline) <-chan struct{} {
 	return quit
 }
 
-func printReport(senders, receivers set.Set) {
+func printReport(senders, receivers types.Set) {
 	fmt.Println("\n== Report =========================================================================")
 	fmt.Printf(" > Connected to %s ________\n", conf.host)
 	for host := range senders {

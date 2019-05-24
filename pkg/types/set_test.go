@@ -1,9 +1,9 @@
-package set_test
+package types_test
 
 import (
 	"testing"
 
-	"github.com/jomoespe/clarity-challenge/pkg/set"
+	"github.com/jomoespe/clarity-challenge/pkg/types"
 )
 
 func TestAdd(t *testing.T) {
@@ -16,7 +16,7 @@ func TestAdd(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		set := set.Set{}
+		set := types.Set{}
 		set.Add(test.values...)
 		if len(set) != test.expected {
 			t.Errorf("wrong set size. Expected: %d, Got: %d", test.expected, len(set))
@@ -35,7 +35,7 @@ func TestClean(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		set := set.Set{}
+		set := types.Set{}
 		set.Add(test.values...)
 		set.Clean()
 		if len(set) != test.expected {

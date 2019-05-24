@@ -1,14 +1,14 @@
-package set_test
+package types_test
 
 import (
 	"testing"
 	"fmt"
 
-	"github.com/jomoespe/clarity-challenge/pkg/set"
+	"github.com/jomoespe/clarity-challenge/pkg/types"
 )
 
 func TestAddHostConnection(t *testing.T) {
-	conns := set.HostConnections{}
+	conns := types.HostConnections{}
 	conns.Add("host-1")
 	conns.Add("host-2")
 	conns.Add("host-1")
@@ -23,7 +23,7 @@ func TestAddHostConnection(t *testing.T) {
 }
 
 func TestCountHostConnections(t *testing.T) {
-	connections := set.HostConnections{}
+	connections := types.HostConnections{}
 	connections.Add("host-1")
 	connections.Add("host-2")
 	connections.Add("host-1")
@@ -48,7 +48,7 @@ func TestCountHostConnections(t *testing.T) {
 }
 
 func TestSort(t *testing.T) {
-	conns := set.HostConnections{}
+	conns := types.HostConnections{}
 	conns.Add("host-3")
 	conns.Add("host-1")
 	conns.Add("host-2")
@@ -64,14 +64,14 @@ func TestSort(t *testing.T) {
 
 	fmt.Println("===========")
 
-	a := set.Sort(conns)
+	a := types.Sort(conns)
 	for k, v := range a {
 		fmt.Printf("%s=%d\n", k, v)
 	}
 }
 
 func TestMax(t *testing.T) {
-	conns := set.HostConnections{}
+	conns := types.HostConnections{}
 	conns.Add("host-3")
 	conns.Add("host-1")
 	conns.Add("host-2")
