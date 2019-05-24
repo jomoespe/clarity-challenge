@@ -109,7 +109,9 @@ func processLoglines(loglines chan *logparser.Logline) <-chan struct{} {
 }
 
 func printReport(senders, receivers types.Set) {
-	fmt.Println("\n== Report =========================================================================")
+	now := time.Now().Unix()
+	
+	fmt.Printf("\n== Report (%v) ==================================================================\n", time.Unix(now, 0))
 	fmt.Printf(" > Connected to %s ________\n", conf.host)
 	for host := range senders {
 		fmt.Printf("\t%s\n", host)
