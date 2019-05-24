@@ -16,14 +16,20 @@ func TestParseLogLine(t *testing.T) {
 		timestamp int64
 		source    string
 		target    string
+		err       error
 	}{
-		{"1234 source target", int64(1234), "source", "target"},
-		{"1234 source target\n ", int64(1234), "source", "target"},
+		{"1234 source target", int64(1234), "source", "target", nil},
+		{"1234 source target\n ", int64(1234), "source", "target", nil},
+		{"1234 source", int64(1234), "source", "target", logparser.ErrNotEnoughFields},
+		{"1234X source", int64(1234), "source", "target", logparser.ErrParsingDate},
 	}
 	for _, test := range tests {
 		line, err := logparser.ParseLogLine(test.logline)
 		if err != nil {
-			t.Errorf("Unexpected error parsing line. %v", err)
+			if err != test.err {
+				t.Errorf("Unexpected error parsing line. %v", err)
+			}
+			break
 		}
 		if line.Timestamp != test.timestamp {
 			t.Errorf("Wrong timestamp. Expected %d, Got: %d", test.timestamp, line.Timestamp)
