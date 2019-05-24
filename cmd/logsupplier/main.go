@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"math/rand"
 	"os"
@@ -8,23 +9,43 @@ import (
 )
 
 const (
-	lapse = 100 * time.Millisecond
+	defaultDelay = 100
 )
 
 func main() {
-	ticker := time.NewTicker(lapse)
-	forever := make(chan struct{})
+	log := infiniteLog(delay())
+	for {
+		fmt.Fprintf(os.Stdout, "%s\n", <-log)
+	}
+}
+
+func delay() time.Duration {
+	delayFlag := flag.Int("delay", defaultDelay, "Number of milliseconds to wait between log line generation")
+	flag.Parse()
+	if *delayFlag == 0 {
+		*delayFlag = 1
+	}
+	return time.Duration(*delayFlag) * time.Millisecond
+}
+
+func infiniteLog(delay time.Duration) <-chan string {
+	ticker := time.NewTicker(delay)
+	log := make(chan string)
 	go func() {
 		for {
 			select {
 			case <-ticker.C:
-				now := time.Now().UnixNano() / 1000000
-				source, target := getRandomNames()
-				fmt.Fprintf(os.Stdout, "%d %s %s\n", now, source, target)
+				log <- randomLogline()
 			}
 		}
 	}()
-	<-forever
+	return log
+}
+
+func randomLogline() string {
+	now := time.Now().UnixNano() / 1000000
+	source, target := getRandomNames()
+	return fmt.Sprintf("%d %s %s", now, source, target)
 }
 
 // Based from https://github.com/moby/moby/blob/master/pkg/namesgenerator/names-generator.go

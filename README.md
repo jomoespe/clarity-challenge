@@ -108,6 +108,10 @@ Examples:
 
 To help running the samples, I've created an small tool that generates log lines in the stardanr output each 100 Milliseconds.
 
+| Parameter             | Description                                                 |
+|-----------------------|-------------------------------------------------------------|
+| `-delay=milliseconds` | Number of milliseconds to wait between log line generation  |
+
 ```terminal
-./log-generator
+./log-generator [-delay=milliseconds]
 ```
