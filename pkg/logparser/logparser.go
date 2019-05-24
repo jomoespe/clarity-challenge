@@ -23,6 +23,9 @@ func ParseLogLine(line string) (*Logline, error) {
 		return &Logline{}, fmt.Errorf("error parsing date. line: %v", line)
 	}
 	source := s[1]
-	target := s[2][:len(s[2])-1]
+	target := s[2][:len(s[2])]
+	if target[len(target)-1:] == "\n" {
+		target = target[:len(target)-1]
+	}
 	return &Logline{timestamp, source, target}, nil
 }
