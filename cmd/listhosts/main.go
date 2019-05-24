@@ -24,14 +24,14 @@ type config struct {
 }
 
 func main() {
-	config := createConfig()
-	reader, err := logparser.CreateReader(config.filenames...)
+	c := createConfig()
+	r, err := logparser.CreateReader(c.filenames...)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, "File not found")
 		os.Exit(logparser.FileNotFoundExitCode)
 	}
 
-	hosts := processLog(config, reader)
+	hosts := processLog(c, r)
 	print(hosts)
 }
 
@@ -56,25 +56,25 @@ func createConfig() *config {
 	}
 }
 
-func processLog(config *config, reader io.Reader) *types.Set {
+func processLog(c *config, r io.Reader) *types.Set {
 	found := &types.Set{}
-	scanner := bufio.NewScanner(reader)
+	scanner := bufio.NewScanner(r)
 	for scanner.Scan() {
-		if line, err := logparser.ParseLogLine(scanner.Text()); err != nil {
-			if config.verbose {
+		line, err := logparser.ParseLogLine(scanner.Text())
+		if err != nil {
+			if c.verbose {
 				fmt.Fprintf(os.Stderr, "%v\n", err)
 			}
-		} else {
-			if line.Timestamp >= config.startDate && line.Timestamp <= config.endDate {
-				switch {
-				case config.hostname == "*":
-					found.Add(line.Target)
-					found.Add(line.Source)
-				case line.Source == config.hostname:
-					found.Add(line.Target)
-				case line.Target == config.hostname:
-					found.Add(line.Source)
-				}
+			continue
+		}
+		if line.Timestamp >= c.startDate && line.Timestamp <= c.endDate {
+			switch {
+			case c.hostname == "*":
+				found.Add(line.Target, line.Source)
+			case line.Source == c.hostname:
+				found.Add(line.Target)
+			case line.Target == c.hostname:
+				found.Add(line.Source)
 			}
 		}
 	}

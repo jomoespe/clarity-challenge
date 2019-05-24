@@ -9,16 +9,15 @@ import (
 	"os"
 )
 
-// CreateReader for first filename array element, or from standard input
+// CreateReader for first file array element, or from standard input
 // if array is empty.
-func CreateReader(filenames ...string) (reader *bufio.Reader, err error) {
-	if len(filenames) < 1 {
-		reader = bufio.NewReader(os.Stdin)
-	} else {
-		var file *os.File
-		if file, err = os.Open(filenames[0]); err == nil {
-			reader = bufio.NewReader(file)
-		}
+func CreateReader(files ...string) (*bufio.Reader, error) {
+	if len(files) < 1 {
+		return bufio.NewReader(os.Stdin), nil
 	}
-	return
+	file, err := os.Open(files[0])
+	if err != nil {
+		return nil, err
+	}
+	return bufio.NewReader(file), nil
 }

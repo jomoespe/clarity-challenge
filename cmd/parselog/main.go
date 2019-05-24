@@ -34,13 +34,13 @@ var (
 )
 
 func main() {
-	reader, err := logparser.CreateReader(conf.filenames...)
+	r, err := logparser.CreateReader(conf.filenames...)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, "File not found")
 		os.Exit(logparser.FileNotFoundExitCode)
 	}
 
-	loglines := readLog(reader)
+	loglines := readLog(r)
 	quit := processLoglines(loglines)
 	<-quit
 	printReport(senders, receivers)
@@ -63,30 +63,29 @@ func createConfig() *config {
 	}
 }
 
-func readLog(reader *bufio.Reader) chan *logparser.Logline {
-	out := make(chan *logparser.Logline)
+func readLog(r *bufio.Reader) chan *logparser.Logline {
+	log := make(chan *logparser.Logline)
 	go func() {
 		for {
-			line, err := reader.ReadString('\n')
+			line, err := r.ReadString('\n')
 			if err != nil {
-				close(out)
+				close(log)
 				break
 			}
 			Logline, _ := logparser.ParseLogLine(line)
-			out <- Logline
+			log <- Logline
 		}
 	}()
-	return out
+	return log
 }
 
-func processLoglines(loglines chan *logparser.Logline) <-chan struct{} {
+func processLoglines(log chan *logparser.Logline) <-chan struct{} {
 	quit := make(chan struct{})
 	ticker := time.NewTicker(conf.lapse)
-
 	go func() {
 		for {
 			select {
-			case line, more := <-loglines:
+			case line, more := <-log:
 				if !more {
 					ticker.Stop()
 					quit <- struct{}{}
@@ -116,7 +115,7 @@ func printReport(senders, receivers types.Set) {
 	now := time.Now().Unix()
 
 	fmt.Printf("\n== Report (%v) ==================================================================\n", time.Unix(now, 0))
-	fmt.Printf(" > Connected to %s ________\n", conf.host)
+	fmt.Printf(" > Hosts Ccnnected to %s ________\n", conf.host)
 	for host := range senders {
 		fmt.Printf("\t%s\n", host)
 	}

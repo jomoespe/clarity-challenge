@@ -5,7 +5,6 @@
 package types_test
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/jomoespe/clarity-challenge/pkg/types"
@@ -27,18 +26,18 @@ func TestAddHostConnection(t *testing.T) {
 }
 
 func TestCountHostConnections(t *testing.T) {
-	connections := types.HostConnections{}
-	connections.Add("host-1")
-	connections.Add("host-2")
-	connections.Add("host-1")
-	connections.Add("host-1")
-	connections.Add("host-2")
-	connections.Add("host-1")
-	connections.Add("host-1")
+	conns := types.HostConnections{}
+	conns.Add("host-1")
+	conns.Add("host-2")
+	conns.Add("host-1")
+	conns.Add("host-1")
+	conns.Add("host-2")
+	conns.Add("host-1")
+	conns.Add("host-1")
 
-	host1Conns := connections.Count("host-1")
-	host2Conns := connections.Count("host-2")
-	host3Conns := connections.Count("host-3")
+	host1Conns := conns.Count("host-1")
+	host2Conns := conns.Count("host-2")
+	host3Conns := conns.Count("host-3")
 
 	if host1Conns != 5 {
 		t.Errorf("Unexpected host connections for host1. Expected: 5, Got: %d", host1Conns)
@@ -51,30 +50,7 @@ func TestCountHostConnections(t *testing.T) {
 	}
 }
 
-func TestSortHostConnections(t *testing.T) {
-	conns := types.HostConnections{}
-	conns.Add("host-3")
-	conns.Add("host-1")
-	conns.Add("host-2")
-	conns.Add("host-1")
-	conns.Add("host-1")
-	conns.Add("host-2")
-	conns.Add("host-1")
-	conns.Add("host-1")
-
-	for k, v := range conns {
-		fmt.Printf("%s=%d\n", k, v)
-	}
-
-	fmt.Println("===========")
-
-	a := types.Sort(conns)
-	for k, v := range a {
-		fmt.Printf("%s=%d\n", k, v)
-	}
-}
-
-func TestMaxHOstConnections(t *testing.T) {
+func TestMaxHostConnections(t *testing.T) {
 	conns := types.HostConnections{}
 	conns.Add("host-3")
 	conns.Add("host-1")
@@ -109,5 +85,4 @@ func TestCleanHostConnections(t *testing.T) {
 	if len(conns) != 0 {
 		t.Errorf("Host connections not clean\n")
 	}
-
 }

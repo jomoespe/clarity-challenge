@@ -21,10 +21,10 @@ func TestCreateReader(t *testing.T) {
 		{[]string{"file-does-not-exist"}, true},
 	}
 	for _, test := range tests {
-		if _, err := logparser.CreateReader(test.filenames...); (err == nil) == test.expectedError {
-			t.Errorf("Unexpected error creating reader. Expected error=%t, Got: %t", test.expectedError, (err == nil))
-
+		_, err := logparser.CreateReader(test.filenames...)
+		if (err == nil) == test.expectedError {
+			t.Errorf("Unexpected error creating reader for %s. Expected error=%t, Got: %t", test.filenames, test.expectedError, (err == nil))
+			t.Error(err)
 		}
 	}
-
 }

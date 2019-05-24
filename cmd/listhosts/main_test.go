@@ -27,8 +27,8 @@ func TestProcessLog(t *testing.T) {
 			expected: 3},
 	}
 	for _, test := range tests {
-		reader, _ := logparser.CreateReader(test.config.filenames...)
-		found := *processLog(test.config, reader)
+		r, _ := logparser.CreateReader(test.config.filenames...)
+		found := *processLog(test.config, r)
 		if len(found) != test.expected {
 			t.Errorf("wrong number of elements processed size. Expected: %d, Got: %d", test.expected, len(found))
 		}
