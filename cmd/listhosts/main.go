@@ -28,9 +28,7 @@ func main() {
 	}
 
 	hosts := processLog(config, reader)
-	for host := range *hosts {
-		fmt.Println(host)
-	}
+	print(hosts)
 }
 
 func createConfig() *config {
@@ -77,4 +75,10 @@ func processLog(config *config, reader io.Reader) *types.Set {
 		}
 	}
 	return found
+}
+
+func print(hosts *types.Set) {
+	for host := range *hosts {
+		fmt.Println(host)
+	}
 }
