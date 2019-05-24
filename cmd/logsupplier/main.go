@@ -3,8 +3,8 @@ package main
 import (
 	"fmt"
 	"math/rand"
-	"time"
 	"os"
+	"time"
 )
 
 const (
@@ -30,9 +30,6 @@ func main() {
 // Based from https://github.com/moby/moby/blob/master/pkg/namesgenerator/names-generator.go
 // Changed GetRandomNames to generate two random names, and removing random factor.
 
-// getRandomNames generates a random name from the list of adjectives and surnames in this package
-// formatted as "adjective_surname". For example 'focused_turing'. If retry is non-zero, a random
-// integer between 0 and 10 will be added to the end of the name, e.g `focused_turing3`
 func getRandomNames() (string, string) {
 begin:
 	left := people[rand.Intn(len(people))]
