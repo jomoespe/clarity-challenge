@@ -22,11 +22,13 @@ type config struct {
 	lapse     time.Duration
 }
 
-var conf = createConfig()
-var senders = types.Set{}
-var receivers = types.Set{}
-var conns = types.HostConnections{}
-
+var (
+	conf = createConfig()
+	senders = types.Set{}
+	receivers = types.Set{}
+	conns = types.HostConnections{}
+)
+ 
 func main() {
 	reader, err := logparser.CreateReader(conf.filenames...)
 	if err != nil {
@@ -99,6 +101,7 @@ func processLoglines(loglines chan *logparser.Logline) <-chan struct{} {
 				// clean data
 				senders.Clean()
 				receivers.Clean()
+				conns.Clean()
 			}
 		}
 	}()

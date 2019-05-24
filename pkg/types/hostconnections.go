@@ -59,3 +59,10 @@ func Sort(m HostConnections) HostConnections {
 	}
 	return r
 }
+
+// Clean removes all Set elements
+func (c HostConnections) Clean() {
+	for k := range c {
+		delete(c, k)
+	}
+}

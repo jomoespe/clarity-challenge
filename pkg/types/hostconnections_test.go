@@ -47,7 +47,7 @@ func TestCountHostConnections(t *testing.T) {
 	}
 }
 
-func TestSort(t *testing.T) {
+func TestSortHostConnections(t *testing.T) {
 	conns := types.HostConnections{}
 	conns.Add("host-3")
 	conns.Add("host-1")
@@ -70,7 +70,7 @@ func TestSort(t *testing.T) {
 	}
 }
 
-func TestMax(t *testing.T) {
+func TestMaxHOstConnections(t *testing.T) {
 	conns := types.HostConnections{}
 	conns.Add("host-3")
 	conns.Add("host-1")
@@ -88,4 +88,22 @@ func TestMax(t *testing.T) {
 	if count != 5 {
 		t.Errorf("Wrong max host count. Expected: 5, Got: %d", count)
 	}
+}
+
+func TestCleanHostConnections(t *testing.T) {
+	conns := types.HostConnections{}
+	conns.Add("host-3")
+	conns.Add("host-1")
+	conns.Add("host-2")
+	conns.Add("host-1")
+	conns.Add("host-1")
+	conns.Add("host-2")
+	conns.Add("host-1")
+	conns.Add("host-1")
+
+	conns.Clean()
+	if len(conns) != 0 {
+		t.Errorf("Host connections not clean\n")
+	}
+
 }
