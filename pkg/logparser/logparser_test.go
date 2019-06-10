@@ -6,6 +6,7 @@ package logparser_test
 
 import (
 	"testing"
+	"time"
 
 	"github.com/jomoespe/clarity-challenge/pkg/logparser"
 )
@@ -13,15 +14,15 @@ import (
 func TestParseLogLine(t *testing.T) {
 	tests := []struct {
 		logline   string
-		timestamp int64
+		timestamp time.Time
 		source    string
 		target    string
 		err       error
 	}{
-		{"1234 source target", int64(1234), "source", "target", nil},
-		{"1234 source target\n ", int64(1234), "source", "target", nil},
-		{"1234 source", int64(1234), "source", "target", logparser.ErrNotEnoughFields},
-		{"1234X source", int64(1234), "source", "target", logparser.ErrParsingDate},
+		{"1234 source target", time.Unix(int64(1234), 0), "source", "target", nil},
+		{"1234 source target\n ", time.Unix(int64(1234), 0), "source", "target", nil},
+		{"1234 source", time.Unix(int64(1234), 0), "source", "target", logparser.ErrNotEnoughFields},
+		{"1234X source", time.Unix(int64(1234), 0), "source", "target", logparser.ErrParsingDate},
 	}
 	for _, test := range tests {
 		line, err := logparser.ParseLogLine(test.logline)
@@ -32,7 +33,7 @@ func TestParseLogLine(t *testing.T) {
 			break
 		}
 		if line.Timestamp != test.timestamp {
-			t.Errorf("Wrong timestamp. Expected %d, Got: %d", test.timestamp, line.Timestamp)
+			t.Errorf("Wrong timestamp. Expected %T, Got: %T", test.timestamp, line.Timestamp)
 		}
 		if line.Source != test.source {
 			t.Errorf("Wrong source host. Expected '%s', Got: '%s'", test.source, line.Source)

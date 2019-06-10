@@ -11,6 +11,7 @@ import (
 	"io"
 	"math"
 	"os"
+	"time"
 
 	"github.com/jomoespe/clarity-challenge/pkg/logparser"
 	"github.com/jomoespe/clarity-challenge/pkg/types"
@@ -18,7 +19,7 @@ import (
 
 type config struct {
 	filenames          []string
-	startDate, endDate int64
+	startDate, endDate time.Time
 	hostname           string
 	verbose            bool
 }
@@ -49,8 +50,8 @@ func createConfig() *config {
 
 	return &config{
 		filenames: files,
-		startDate: *start,
-		endDate:   *end,
+		startDate: time.Unix(*start, 0),
+		endDate:   time.Unix(*end, 0),
 		hostname:  *hostname,
 		verbose:   *verbose,
 	}
@@ -67,7 +68,7 @@ func processLog(c *config, r io.Reader) *types.Set {
 			}
 			continue
 		}
-		if line.Timestamp >= c.startDate && line.Timestamp <= c.endDate {
+		if line.Timestamp.Equal(c.startDate) || line.Timestamp.After(c.startDate) && line.Timestamp.Before(c.endDate) {
 			switch {
 			case c.hostname == "*":
 				found.Add(line.Target, line.Source)

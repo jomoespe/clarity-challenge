@@ -8,10 +8,11 @@ import (
 	"errors"
 	"strconv"
 	"strings"
+	"time"
 )
 
 type Logline struct {
-	Timestamp int64
+	Timestamp time.Time
 	Source    string
 	Target    string
 }
@@ -27,10 +28,11 @@ func ParseLogLine(line string) (*Logline, error) {
 	if len(s) < 3 {
 		return &Logline{}, ErrNotEnoughFields
 	}
-	timestamp, err := strconv.ParseInt(s[0], 10, 64)
+	t, err := strconv.ParseInt(s[0], 10, 64)
 	if err != nil {
 		return &Logline{}, ErrParsingDate
 	}
+	timestamp := time.Unix(t, 0)
 	source := s[1]
 	target := s[2][:len(s[2])]
 	if target[len(target)-1:] == "\n" {

@@ -6,6 +6,7 @@ package main
 
 import (
 	"testing"
+	"time"
 
 	"github.com/jomoespe/clarity-challenge/pkg/logparser"
 )
@@ -19,8 +20,8 @@ func TestProcessLog(t *testing.T) {
 	}{
 		{config: &config{
 			[]string{"../../test/input-file-10000.txt"},
-			int64(1565647204351),
-			int64(1565687511867),
+			time.Unix(int64(1565647204351), 0),
+			time.Unix(int64(1565687511867), 0),
 			"Aadvik",
 			false,
 		},
