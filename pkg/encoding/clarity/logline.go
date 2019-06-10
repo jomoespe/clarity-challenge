@@ -30,7 +30,7 @@ func (l *Logline) UnmarshalText(line []byte) error {
 	if len(s) < 3 {
 		return ErrNotEnoughFields
 	}
-	sec, err := strconv.ParseInt(s[0], 10, 64)
+	sec, err := strconv.ParseInt(strings.TrimSpace(s[0]), 10, 64)
 	if err != nil {
 		return ErrParsingDate
 	}
