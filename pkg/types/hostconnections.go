@@ -4,8 +4,11 @@
 
 package types
 
+// HostConnections it's a map used to maintain a count of
+// fost references by another host
 type HostConnections map[string]int
 
+// Add a host connection
 func (c HostConnections) Add(host string) {
 	i := 1
 	if _, ok := c[host]; ok {
@@ -14,6 +17,7 @@ func (c HostConnections) Add(host string) {
 	c[host] = i
 }
 
+// Count the references for a host
 func (c HostConnections) Count(host string) int {
 	if _, ok := c[host]; !ok {
 		return 0

@@ -4,6 +4,7 @@
 
 package types
 
+// Set of strings
 type Set map[string]struct{}
 
 // Add values to a Set
