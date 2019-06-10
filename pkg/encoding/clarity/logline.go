@@ -2,7 +2,7 @@
 // Use of this source code is governed by a WTFPL-style
 // license that can be found in the LICENSE file.
 
-package logparser
+package clarity
 
 import (
 	"errors"
@@ -23,20 +23,20 @@ var (
 	ErrParsingDate     = errors.New("error parsing date")
 )
 
-func ParseLogLine(line string) (*Logline, error) {
-	s := strings.Split(line, " ")
+func (l *Logline) UnmarshalText(line []byte) error {
+	s := strings.Split(string(line), " ")
 	if len(s) < 3 {
-		return &Logline{}, ErrNotEnoughFields
+		return ErrNotEnoughFields
 	}
 	t, err := strconv.ParseInt(s[0], 10, 64)
 	if err != nil {
-		return &Logline{}, ErrParsingDate
+		return ErrParsingDate
 	}
-	timestamp := time.Unix(t, 0)
-	source := s[1]
-	target := s[2][:len(s[2])]
-	if target[len(target)-1:] == "\n" {
-		target = target[:len(target)-1]
+	l.Timestamp = time.Unix(t, 0)
+	l.Source = s[1]
+	l.Target = s[2][:len(s[2])]
+	if l.Target[len(l.Target)-1:] == "\n" {
+		l.Target = l.Target[:len(l.Target)-1]
 	}
-	return &Logline{timestamp, source, target}, nil
+	return nil
 }

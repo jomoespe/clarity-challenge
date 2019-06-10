@@ -2,31 +2,32 @@
 // Use of this source code is governed by a WTFPL-style
 // license that can be found in the LICENSE file.
 
-package logparser_test
+package clarity_test
 
 import (
 	"testing"
 	"time"
 
-	"github.com/jomoespe/clarity-challenge/pkg/logparser"
+	"github.com/jomoespe/clarity-challenge/pkg/encoding/clarity"
 )
 
-func TestParseLogLine(t *testing.T) {
+func TestUnmarshalText(t *testing.T) {
+
 	tests := []struct {
-		logline   string
+		line      []byte
 		timestamp time.Time
 		source    string
 		target    string
 		err       error
 	}{
-		{"1234 source target", time.Unix(int64(1234), 0), "source", "target", nil},
-		{"1234 source target\n ", time.Unix(int64(1234), 0), "source", "target", nil},
-		{"1234 source", time.Unix(int64(1234), 0), "source", "target", logparser.ErrNotEnoughFields},
-		{"1234X source", time.Unix(int64(1234), 0), "source", "target", logparser.ErrParsingDate},
+		{[]byte("1234 source target"), time.Unix(int64(1234), 0), "source", "target", nil},
+		{[]byte("1234 source target\n "), time.Unix(int64(1234), 0), "source", "target", nil},
+		{[]byte("1234 source"), time.Unix(int64(1234), 0), "source", "target", clarity.ErrNotEnoughFields},
+		{[]byte("1234X source"), time.Unix(int64(1234), 0), "source", "clarity", clarity.ErrParsingDate},
 	}
 	for _, test := range tests {
-		line, err := logparser.ParseLogLine(test.logline)
-		if err != nil {
+		line := clarity.Logline{}
+		if err := line.UnmarshalText(test.line); err != nil {
 			if err != test.err {
 				t.Errorf("Unexpected error parsing line. %v", err)
 			}

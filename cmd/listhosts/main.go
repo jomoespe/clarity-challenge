@@ -13,6 +13,7 @@ import (
 	"os"
 	"time"
 
+	"github.com/jomoespe/clarity-challenge/pkg/encoding/clarity"
 	"github.com/jomoespe/clarity-challenge/pkg/logparser"
 	"github.com/jomoespe/clarity-challenge/pkg/types"
 )
@@ -61,7 +62,8 @@ func processLog(c *config, r io.Reader) *types.Set {
 	found := &types.Set{}
 	scanner := bufio.NewScanner(r)
 	for scanner.Scan() {
-		line, err := logparser.ParseLogLine(scanner.Text())
+		line := clarity.Logline{}
+		err := line.UnmarshalText([]byte(scanner.Text()))
 		if err != nil {
 			if c.verbose {
 				fmt.Fprintf(os.Stderr, "%v\n", err)

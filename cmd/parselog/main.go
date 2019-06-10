@@ -11,6 +11,7 @@ import (
 	"os"
 	"time"
 
+	"github.com/jomoespe/clarity-challenge/pkg/encoding/clarity"
 	"github.com/jomoespe/clarity-challenge/pkg/logparser"
 	"github.com/jomoespe/clarity-challenge/pkg/types"
 )
@@ -63,23 +64,25 @@ func createConfig() *config {
 	}
 }
 
-func readLog(r *bufio.Reader) chan *logparser.Logline {
-	log := make(chan *logparser.Logline)
+func readLog(r *bufio.Reader) chan *clarity.Logline {
+	log := make(chan *clarity.Logline)
 	go func() {
 		for {
-			line, err := r.ReadString('\n')
+			line, err := r.ReadBytes('\n')
 			if err != nil {
 				close(log)
 				break
 			}
-			Logline, _ := logparser.ParseLogLine(line)
-			log <- Logline
+			l := &clarity.Logline{}
+			if err := l.UnmarshalText(line); err != nil {
+				log <- l
+			}
 		}
 	}()
 	return log
 }
 
-func processLoglines(log chan *logparser.Logline) <-chan struct{} {
+func processLoglines(log chan *clarity.Logline) <-chan struct{} {
 	quit := make(chan struct{})
 	ticker := time.NewTicker(conf.lapse)
 	go func() {
