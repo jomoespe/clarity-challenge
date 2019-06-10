@@ -11,6 +11,7 @@ import (
 	"time"
 )
 
+// Logline represents a line in a log line
 type Logline struct {
 	Timestamp time.Time
 	Source    string
@@ -23,20 +24,18 @@ var (
 	ErrParsingDate     = errors.New("error parsing date")
 )
 
+// UnmarshalText is the interface implementation of encoding/UnmarshalText .
 func (l *Logline) UnmarshalText(line []byte) error {
 	s := strings.Split(string(line), " ")
 	if len(s) < 3 {
 		return ErrNotEnoughFields
 	}
-	t, err := strconv.ParseInt(s[0], 10, 64)
+	sec, err := strconv.ParseInt(s[0], 10, 64)
 	if err != nil {
 		return ErrParsingDate
 	}
-	l.Timestamp = time.Unix(t, 0)
-	l.Source = s[1]
-	l.Target = s[2][:len(s[2])]
-	if l.Target[len(l.Target)-1:] == "\n" {
-		l.Target = l.Target[:len(l.Target)-1]
-	}
+	l.Timestamp = time.Unix(sec, 0)
+	l.Source = strings.TrimSpace(s[1])
+	l.Target = strings.TrimSpace(s[2])
 	return nil
 }
