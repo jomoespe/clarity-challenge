@@ -1,10 +1,11 @@
-.PHONY: test listhosts parselog logsupplier
 
 hostnames-target   = listhosts
 parselog-target    = parselog
 logsupplier-target = log-generator
 
-all: clean test listhosts parselog logsupplier
+.PHONY: test listhosts parselog log-generator
+
+all: clean test listhosts parselog log-generator
 
 clean: 
 	@ go clean ./...
@@ -20,5 +21,5 @@ listhosts:
 parselog:
 	@ go build -o $(parselog-target) -ldflags "-s -w" cmd/parselog/main.go
 
-logsupplier:
+log-generator:
 	@ go build -o $(logsupplier-target) -ldflags "-s -w" cmd/logsupplier/main.go
