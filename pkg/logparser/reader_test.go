@@ -11,7 +11,6 @@ import (
 )
 
 func TestCreateReader(t *testing.T) {
-
 	tests := []struct {
 		filenames     []string
 		expectedError bool
@@ -22,6 +21,7 @@ func TestCreateReader(t *testing.T) {
 		{[]string{""}, true},
 		{[]string{}, false},
 	}
+
 	for _, test := range tests {
 		_, err := logparser.CreateReader(test.filenames...)
 		if (err == nil) == test.expectedError {
