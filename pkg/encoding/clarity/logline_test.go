@@ -12,7 +12,6 @@ import (
 )
 
 func TestUnmarshalText(t *testing.T) {
-
 	tests := []struct {
 		line      []byte
 		timestamp time.Time
@@ -21,10 +20,14 @@ func TestUnmarshalText(t *testing.T) {
 		err       error
 	}{
 		{[]byte("1234 source target"), time.Unix(int64(1234), 0), "source", "target", nil},
-		{[]byte("1234 source target\n "), time.Unix(int64(1234), 0), "source", "target", nil},
-		{[]byte("1234 source"), time.Unix(int64(1234), 0), "source", "target", clarity.ErrNotEnoughFields},
-		{[]byte("1234X source"), time.Unix(int64(1234), 0), "source", "clarity", clarity.ErrParsingDate},
+		{[]byte("    1234 source target"), time.Unix(int64(1234), 0), "source", "target", nil},
+		{[]byte("    1234     source     target"), time.Unix(int64(1234), 0), "source", "target", nil},
+		{[]byte("1234 source target \n"), time.Unix(int64(1234), 0), "source", "target", nil},
+		{[]byte("1234 source target \n "), time.Unix(int64(1234), 0), "source", "target", nil},
+		{[]byte("1234 source"), time.Unix(int64(1234), 0), "source", "", clarity.ErrNotEnoughFields},
+		{[]byte("1234X source"), time.Unix(int64(1234), 0), "source", "", clarity.ErrParsingDate},
 	}
+
 	for _, test := range tests {
 		line := clarity.Logline{}
 		if err := line.UnmarshalText(test.line); err != nil {

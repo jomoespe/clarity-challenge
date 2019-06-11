@@ -24,13 +24,13 @@ var (
 	ErrParsingDate     = errors.New("error parsing date")
 )
 
-// UnmarshalText is the interface implementation of encoding/UnmarshalText .
+// UnmarshalText is the interface implementation of encoding/UnmarshalText
 func (l *Logline) UnmarshalText(line []byte) error {
-	s := strings.Split(string(line), " ")
+	s := strings.Fields(string(line))
 	if len(s) < 3 {
 		return ErrNotEnoughFields
 	}
-	sec, err := strconv.ParseInt(strings.TrimSpace(s[0]), 10, 64)
+	sec, err := strconv.ParseInt(s[0], 10, 64)
 	if err != nil {
 		return ErrParsingDate
 	}
